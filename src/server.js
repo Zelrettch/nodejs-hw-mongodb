@@ -12,7 +12,7 @@ export const setupServer = () => {
   const PORT = Number(getEnvVar('PORT', 3000));
 
   // app.use(cors());
-  // app.use(express.json());
+  app.use(express.json());
 
   app.use(
     pino({
