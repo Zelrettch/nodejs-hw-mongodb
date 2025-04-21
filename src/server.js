@@ -5,13 +5,13 @@ import cors from 'cors';
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHanler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import contactsRouter from './routes/contacts.js';
+import router from './routers/index.js';
 export const setupServer = () => {
   const app = express();
 
   const PORT = Number(getEnvVar('PORT', 3000));
 
-  // app.use(cors());
+  app.use(cors());
   app.use(express.json());
 
   app.use(
@@ -19,8 +19,13 @@ export const setupServer = () => {
       transport: { target: 'pino-pretty' },
     }),
   );
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'HelloWorld',
+    });
+  });
 
-  app.use(contactsRouter);
+  app.use(router);
   app.use(notFoundHandler);
 
   app.use(errorHanler);
