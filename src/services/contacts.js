@@ -38,20 +38,20 @@ export async function getAllContacts({
   };
 }
 
-export async function getContactById(id) {
-  return await ContactsCollection.findById(id);
+export async function getContactById(_id, userId) {
+  return await ContactsCollection.findOne({ _id, userId });
 }
 
 export async function createContact(payload) {
   return await ContactsCollection.create(payload);
 }
 
-export async function deleteContact(_id) {
-  return await ContactsCollection.findOneAndDelete({ _id });
+export async function deleteContact(_id, userId) {
+  return await ContactsCollection.findOneAndDelete({ _id, userId });
 }
 
-export async function updateContact(_id, payload) {
-  return await ContactsCollection.findOneAndUpdate({ _id }, payload, {
+export async function updateContact(_id, userId, payload) {
+  return await ContactsCollection.findOneAndUpdate({ _id, userId }, payload, {
     new: true,
   });
 }

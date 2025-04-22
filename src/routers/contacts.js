@@ -16,20 +16,13 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 import { isValidId } from '../middlewares/isValidId.js';
 
-import checkContactIdCreator from '../middlewares/checkContactIdCreator.js';
-
 const router = Router();
 
 router.use(ctrlWrapper(authenticate));
 
 router.get('/', ctrlWrapper(getContactsController));
 
-router.get(
-  '/:contactId',
-  isValidId,
-  checkContactIdCreator,
-  ctrlWrapper(getContactByIdController),
-);
+router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdController));
 
 router.post(
   '/',
@@ -37,17 +30,11 @@ router.post(
   ctrlWrapper(createContactController),
 );
 
-router.delete(
-  '/:contactId',
-  isValidId,
-  checkContactIdCreator,
-  ctrlWrapper(deleteContactController),
-);
+router.delete('/:contactId', isValidId, ctrlWrapper(deleteContactController));
 
 router.patch(
   '/:contactId',
   isValidId,
-  checkContactIdCreator,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
