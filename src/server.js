@@ -6,6 +6,8 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHanler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import router from './routers/index.js';
+import cookieParser from 'cookie-parser';
+
 export const setupServer = () => {
   const app = express();
 
@@ -13,12 +15,14 @@ export const setupServer = () => {
 
   app.use(cors());
   app.use(express.json());
+  app.use(cookieParser());
 
   app.use(
     pino({
       transport: { target: 'pino-pretty' },
     }),
   );
+
   app.get('/', (req, res) => {
     res.json({
       message: 'HelloWorld',
